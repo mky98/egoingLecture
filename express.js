@@ -1,6 +1,9 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 const fs = require('fs');
 var server = express();
+
+server.use(bodyParser.urlencoded({ extended: false }));
 
 function templateList(){
     var topics = fs.readdirSync('data');
@@ -26,6 +29,7 @@ function templateHTML(_listTag, _title, _desc){
                     <ul>
                         ${_listTag}
                     </ul>
+                    <a href='/create'>create</a>
                     <h2>${_title}</h2>
                     ${_desc}
                 </body>
@@ -38,6 +42,29 @@ function templateHTML(_listTag, _title, _desc){
 server.get('/', function (request, response) {
     var title = 'Welcome';
     var desc = 'Hello, web';
+    var listTag = templateList();
+    var content = templateHTML(listTag, title, desc);
+
+    response.write(content);
+    response.end();
+});
+
+//http://localhost:3000/create_process?title=name&desc=aaaaa
+server.post('/create_process',function (request, response) {
+    const title = request.body.title;
+    const desc = request.body.desc;
+    fs.writeFileSync(`data/${title}`, desc);
+    response.redirect(`/topic/${title}`);
+});
+
+server.get('/create', function (request, response) {
+    var title = 'Create';
+    var desc = `
+    <form action="/create_process" method="post">
+        <p><input type="text" name="title" placeholder="title"></p>
+        <p><textarea name="desc" placeholder="description"></textarea></p>
+        <p><input type="submit"></p>
+    </form>`;
     var listTag = templateList();
     var content = templateHTML(listTag, title, desc);
 
