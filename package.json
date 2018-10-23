@@ -2,21 +2,22 @@
   "name": "web",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "express.js",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:mky98/egoingLecture.git"
+    "url": "git+https://github.com/mky98/egoingLecture.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mky98/egoingLecture/issues"
   },
-  "homepage": "https://github.com/mky98/egoingLecture#readme",
-  "dependencies": {
-    "express": "^4.16.4"
-  }
+  "homepage": "https://github.com/mky98/egoingLecture#readme"
 }
